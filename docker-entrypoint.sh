@@ -52,10 +52,10 @@ if [ ! -z "$PRE_RUN" ]; then
   $PRE_RUN
 fi
 
-if [ -d "/usr/src/app" ] && [ -f "/usr/src/app/ecosystem.json" ]; then
+if [ -d "/usr/src/app" ] && [ -f "/usr/src/app/$1" ]; then
   cd /usr/src/app || exit
-  pm2-docker start
+  pm2-docker start $1
 else
   echo "There is no NodeJS application installed"
-  $@
+  $1
 fi
