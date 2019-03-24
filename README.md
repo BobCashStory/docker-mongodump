@@ -8,16 +8,39 @@ Launch a git hosted node project with something like:
 docker run -d -p 8080:8080 \
   --env NPM_TOKEN=aaaaaaaa-bbbb-0000-0a0a-ffffeeee8888 \
   --env PACKAGES="make gcc g++ python" \  
-  --env REPO_KEY="$(cat ~/.ssh/my-repo-key)" \
   --env REPO="git@github.com:reallyreally/node-expressjs-service.git" \
   --env GIT_BRANCH="production-live" \
   --env KEYMETRICS_PUBLIC=0000aaaa1111ffff \
+  --env KEYMETRICS_SECRET=0123456789abcdef \
   --env PRE_RUN="npm run build" \
-  --env PM2_COMMAND=".RET=0123456789abcdef \
-  --env PORT=8080 \/pm2.json" \
-  --env KEYMETRICS_SEC
+  --env PM2_COMMAND="pm2.json" \
+  --env PORT=8080 \
   -v $HOME/.ssh/id-rsa:/root/.ssh/id-rsa \
   cashstory/node-pm2-git
+```
+
+or in with this docker-compose.yml file:
+```
+version: '2'
+services:
+  darkknight:
+    image: cashstory/docker-node-pm2-git:latest
+    container_name: darkknight
+    restart: always
+    ports:
+      - 8001:8080
+    environment:
+      - NPM_TOKEN=aaaaaaaa-bbbb-0000-0a0a-ffffeeee8888
+      - PACKAGES="make gcc g++ python"
+      - REPO=git@github.com:reallyreally/node-expressjs-service.git
+      - GIT_BRANCH=production-live
+      - KEYMETRICS_PUBLIC=0000aaaa1111ffff
+      - KEYMETRICS_SECRET=0123456789abcdef
+      - PRE_RUN=npm start build
+      - PM2_COMMAND=ecosystem.json
+      - PORT=8080
+    volumes:
+      - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa
 ```
 
 Environment variables
