@@ -13,9 +13,11 @@ docker run -d -p 8080:8080 \
   --env GIT_BRANCH="production-live" \
   --env KEYMETRICS_PUBLIC=0000aaaa1111ffff \
   --env PRE_RUN="npm run build" \
-  --env KEYMETRICS_SECRET=0123456789abcdef \
-  --env PORT=8080 \
-  really/node-pm2-git ./pm2.json
+  --env PM2_COMMAND=".RET=0123456789abcdef \
+  --env PORT=8080 \/pm2.json" \
+  --env KEYMETRICS_SEC
+  -v $HOME/.ssh/id-rsa:/root/.ssh/id-rsa \
+  cashstory/node-pm2-git
 ```
 
 Environment variables
@@ -24,14 +26,20 @@ Environment variables
 `NPM_TOKEN` allows to use private [npmjs.com](https://www.npmjs.com) packages (optional)
 `PACKAGES` allows installation of packages that might be needed for your app (optional)
 `REPO_KEY` read in a file to be used as the key for your repository clone (optional)
+`PRE_RUN` run command before pm2 ex: build your project (optional)
+`PM2_COMMAND` the file to use with pm2 (required)
 `REPO` the repository to clone (required)
 `GIT_BRANCH` the branch to clone (optional)
 `KEYMETRICS_PUBLIC` & `KEYMETRICS_SECRET` if you use [keymetrics.io](https://keymetrics.io) (optional)
 
+For private repos expose your ssh-key with volume
+-----------
+-v $HOME/.ssh/id-rsa:/root/.ssh/id-rsa \
+
 App Startup
 -----------
 
-In the example we call `./pm2.json` which could contain the below.
+In the example we call `./pm2.json` which could contain in your project the below.
 
 ```
 {
@@ -47,5 +55,3 @@ In the example we call `./pm2.json` which could contain the below.
   }]
 }
 ```
-
-If you do not want to use `./pm2.json` You equally could just replace it with `./bin/www` for a typical [ExpressJS](https://ExpressJS.com) application (you will loose the ability to configure PM2 clustering etc).

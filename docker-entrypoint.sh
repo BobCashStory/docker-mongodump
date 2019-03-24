@@ -16,20 +16,10 @@ if [ ! -d "/usr/src/app/.git" ]; then
     echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > /root/.npmrc
   fi
 
-  if [ ! -z "$REPO_KEY" ]; then
-    echo "Storing private key as /root/.ssh/repo-key"
-    printf "${REPO_KEY}" > /root/.ssh/repo-key
-  fi
-
   if [ ! -z "$GIT_BRANCH" ]; then
     GITBRANCHCMD="-b ${GIT_BRANCH}"
   else
     GITBRANCHCMD=""
-  fi
-
-  if [ ! -s "/root/.ssh/repo-key" ]; then
-    echo "No private key provided - removing configuration"
-    rm -f /root/.ssh/repo-key /root/.ssh/config
   fi
 
   echo "Cloning ${REPO}"
