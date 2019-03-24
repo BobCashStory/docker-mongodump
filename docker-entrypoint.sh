@@ -22,6 +22,11 @@ if [ ! -d "/usr/src/app/.git" ]; then
     GITBRANCHCMD=""
   fi
 
+  if [ ! -s "/root/.ssh/id_rsa" ]; then
+    echo "No private key provided - removing configuration"
+    rm -f /root/.ssh/id_rsa /root/.ssh/config
+  fi  
+
   echo "Cloning ${REPO}"
   git clone $GITBRANCHCMD $REPO /usr/src/app
   if [ -d "/usr/src/app/.git" ]; then
@@ -35,17 +40,17 @@ if [ ! -d "/usr/src/app/.git" ]; then
     echo "Failed to fetch repository"
   fi
 
-fi
+  if [ ! -z "$PRE_RUN" ]; then
+    echo "$PRE_RUN"
+    $PRE_RUN
+  fi
 
-if [ ! -z "$PRE_RUN" ]; then
-  echo "$PRE_RUN"
-  $PRE_RUN
-fi
+  if [ -d "/usr/src/app" ] && [ -f "/usr/src/app/$PM2_COMMAND" ]; then
+    cd /usr/src/app || exit
+    pm2-docker start $PM2_COMMAND
+  else
+    echo "There is no NodeJS application installed"
+    $PM2_COMMAND
+  fi
 
-if [ -d "/usr/src/app" ] && [ -f "/usr/src/app/$PM2_COMMAND" ]; then
-  cd /usr/src/app || exit
-  pm2-docker start $PM2_COMMAND
-else
-  echo "There is no NodeJS application installed"
-  $PM2_COMMAND
 fi
