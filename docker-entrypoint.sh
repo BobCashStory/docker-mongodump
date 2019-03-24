@@ -41,6 +41,7 @@ if [ ! -d "/usr/src/app/.git" ]; then
   fi
 
   if [ ! -z "$PRE_RUN" ]; then
+    cd /usr/src/app || exit
     echo "$PRE_RUN"
     $PRE_RUN
   fi
