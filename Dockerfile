@@ -8,10 +8,10 @@ RUN apk add --update --no-cache git ca-certificates && \
   rm -rf /tmp/* /var/cache/apk/* && \
   mkdir -p /usr/src && \
   mkdir /root/.ssh && \
-  touch /root/.ssh/repo-key && \
-  echo "IdentityFile /root/.ssh/repo-key" > /root/.ssh/config && \
+  touch /root/.ssh/id_rsa && \
+  echo "IdentityFile /root/.ssh/id_rsa" > /root/.ssh/config && \
   chmod 600 /root/.ssh/config && \
-  chmod 600 /root/.ssh/repo-key
+  chmod 600 /root/.ssh/id_rsa
 
 RUN pm2 install pm2-auto-pull
 

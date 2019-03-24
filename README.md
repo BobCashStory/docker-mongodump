@@ -15,7 +15,7 @@ docker run -d -p 8080:8080 \
   --env PRE_RUN="npm run build" \
   --env PM2_COMMAND="pm2.json" \
   --env PORT=8080 \
-  -v $HOME/.ssh/id-rsa:/root/.ssh/id-rsa \
+  -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa \
   cashstory/node-pm2-git
 ```
 
@@ -57,7 +57,7 @@ Environment variables
 
 For private repos expose your ssh-key with volume
 -----------
--v $HOME/.ssh/id-rsa:/root/.ssh/id-rsa \
+-v YOUR_KEY_PATH:/root/.ssh/id_rsa \
 
 App Startup
 -----------
