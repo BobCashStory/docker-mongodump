@@ -39,19 +39,19 @@ if [ ! -d "/usr/src/app/.git" ]; then
   else
     echo "Failed to fetch repository"
   fi
-
-  if [ ! -z "$PRE_RUN" ]; then
-    cd /usr/src/app || exit
-    echo "$PRE_RUN"
-    $PRE_RUN
-  fi
-
-  if [ -d "/usr/src/app" ] && [ -f "/usr/src/app/$PM2_COMMAND" ]; then
-    cd /usr/src/app || exit
-    pm2-docker start $PM2_COMMAND
-  else
-    echo "There is no NodeJS application installed"
-    $PM2_COMMAND
-  fi
-
 fi
+
+if [ -d "/usr/src/app" ] && [ ! -z "$PRE_RUN" ]; then
+  cd /usr/src/app || exit
+  echo "$PRE_RUN"
+  $PRE_RUN
+fi
+
+if [ -d "/usr/src/app" ] && [ -f "/usr/src/app/$PM2_COMMAND" ]; then
+  cd /usr/src/app || exit
+  pm2-docker start $PM2_COMMAND
+else
+  echo "There is no NodeJS application installed"
+  $PM2_COMMAND
+fi
+
