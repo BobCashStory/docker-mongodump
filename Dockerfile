@@ -1,4 +1,4 @@
-FROM keymetrics/pm2:latest
+FROM keymetrics/pm2:latest-alpine
 
 ENV NPM_CONFIG_LOGLEVEL warn
 
@@ -15,7 +15,7 @@ RUN apk add --update --no-cache git ca-certificates && \
 
 RUN pm2 install pm2-auto-pull
 
-RUN pm2 set pm2-auto-pull:interval 60000
+RUN pm2 set pm2-auto-pull:interval 120000
 
 COPY known_hosts /root/.ssh/known_hosts
 COPY docker-entrypoint.sh /usr/local/bin/
