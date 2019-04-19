@@ -1,5 +1,19 @@
 FROM keymetrics/pm2:latest-alpine
 
+# Build-time metadata as defined at http://label-schema.org
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+LABEL org.label-schema.build-date=$BUILD_DATE \
+  org.label-schema.name="Node.JS with PM2 and git" \
+  org.label-schema.description="Provides node with working pm2 and git. Supports starting apps from pm2.json with feedback to keymetrics." \
+  org.label-schema.url="https://cashstory.com" \
+  org.label-schema.vcs-ref=$VCS_REF \
+  org.label-schema.vcs-url="https://BobCashStory/reallyreally/docker-node-pm2-git" \
+  org.label-schema.vendor="Cashstory, Inc." \
+  org.label-schema.version=$VERSION \
+  org.label-schema.schema-version="1.0"
+
 ENV NPM_CONFIG_LOGLEVEL warn
 
 RUN apk add --update --no-cache git ca-certificates && \
