@@ -16,6 +16,10 @@ if [ ! -d "/usr/src/app/.git" ]; then
     pm2 set pm2-slack:slack_url $SLACK_WEBHOOK
   fi
 
+  if [ ! -z "$SLACK_NAME" ]; then
+    pm2 set pm2-slack:servername $SLACK_NAME
+  fi
+
   if [ ! -z "$NPM_TOKEN" ]; then
     echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > /root/.npmrc
   fi
