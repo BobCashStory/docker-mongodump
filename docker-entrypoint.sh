@@ -12,6 +12,10 @@ if [ ! -d "/usr/src/app/.git" ]; then
     apk add --no-cache $PACKAGES
   fi
 
+  if [ ! -z "$SLACK_WEBHOOK" ]; then
+    pm2 set pm2-slack:slack_url $SLACK_WEBHOOK
+  fi
+
   if [ ! -z "$NPM_TOKEN" ]; then
     echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > /root/.npmrc
   fi

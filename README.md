@@ -1,4 +1,4 @@
-# really/node-pm2-git
+# BobCashStory/node-pm2-git
 Docker container to fetch code from public/private repos with key where needed
 
 [![](https://images.microbadger.com/badges/image/cashstory/docker-node-pm2-git.svg)](https://microbadger.com/images/cashstory/docker-node-pm2-git "Get your own image badge on microbadger.com")
@@ -13,6 +13,7 @@ docker run -d -p 8080:8080 \
   --env GIT_BRANCH="production-live" \
   --env KEYMETRICS_PUBLIC=0000aaaa1111ffff \
   --env KEYMETRICS_SECRET=0123456789abcdef \
+  --env SLACK_WEBHOOK="https://slack_url" \
   --env PRE_RUN="npm run build" \
   --env PM2_COMMAND="pm2.json" \
   --env PORT=8080 \
@@ -54,6 +55,7 @@ Environment variables
 `PM2_COMMAND` the file to use with pm2 (required)
 `REPO` the repository to clone (required)
 `GIT_BRANCH` the branch to clone (optional)
+`SLACK_WEBHOOK` slack webhook to receine pm2 notifs (optional)
 `KEYMETRICS_PUBLIC` & `KEYMETRICS_SECRET` if you use [keymetrics.io](https://keymetrics.io) (optional)
 
 For private repos expose your ssh-key with volume

@@ -14,6 +14,10 @@ RUN apk add --update --no-cache git ca-certificates && \
   chmod 600 /root/.ssh/id_rsa
 
 RUN pm2 install pm2-auto-pull
+RUN pm2 install pm2-slack
+RUN pm2 set pm2-slack:restart true
+RUN pm2 set pm2-slack:start true
+RUN pm2 set pm2-slack:online true
 
 RUN pm2 set pm2-auto-pull:interval 120000
 
