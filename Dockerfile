@@ -1,4 +1,4 @@
-FROM keymetrics/pm2:latest-alpine
+FROM keymetrics/pm2:latest-stretch
 
 ENV NPM_CONFIG_LOGLEVEL warn
 
