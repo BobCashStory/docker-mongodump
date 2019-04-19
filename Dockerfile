@@ -18,7 +18,8 @@ ENV NPM_CONFIG_LOGLEVEL warn
 
 RUN apk add --update --no-cache git ca-certificates && \
   update-ca-certificates && \
-  apk --update add --no-cache openssl openssh bash && \
+  apk add --update --no-cache openssl openssh bash && \
+  apk add --update --no-cache curl nano make gcc g++ python linux-headers binutils-gold gnupg libstdc++ \
   rm -rf /tmp/* /var/cache/apk/* && \
   mkdir -p /usr/src && \
   mkdir /root/.ssh && \
