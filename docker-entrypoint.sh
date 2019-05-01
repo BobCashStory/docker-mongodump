@@ -49,9 +49,8 @@ fi
 
 if [ -d "/usr/src/app" ] && [ ! -z "$NODE_COMMAND" ]; then
   cd /usr/src/app || exit
-  pm2-docker start $NODE_COMMAND
-else
-  echo "There is no NodeJS application installed"
   $NODE_COMMAND
+else
+  echo "There is no NodeJS application installed or $NODE_COMMAND exit"
 fi
 
