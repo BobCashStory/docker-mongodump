@@ -47,7 +47,7 @@ Environment variables
 `NPM_TOKEN` allows to use private [npmjs.com](https://www.npmjs.com) packages (optional)
 `PACKAGES` allows installation of packages that might be needed for your app (optional)
 `REPO_KEY` read in a file to be used as the key for your repository clone (optional)
-`PRE_RUN` run command before pm2 ex: build your project (optional)
+`PRE_RUN` run command before NODE_COMMAND ex: fetch dependency (optional)
 `NODE_COMMAND` the command to run your code
 `REPO` the repository to clone (required)
 `GIT_BRANCH` the branch to clone (optional)
