@@ -12,14 +12,6 @@ if [ ! -d "/usr/src/app/.git" ]; then
     apk add --no-cache $PACKAGES
   fi
 
-  if [ ! -z "$SLACK_WEBHOOK" ]; then
-    pm2 set pm2-slack:slack_url $SLACK_WEBHOOK
-  fi
-
-  if [ ! -z "$SLACK_NAME" ]; then
-    pm2 set pm2-slack:servername $SLACK_NAME
-  fi
-
   if [ ! -z "$NPM_TOKEN" ]; then
     echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > /root/.npmrc
   fi
@@ -55,11 +47,11 @@ if [ -d "/usr/src/app" ] && [ ! -z "$PRE_RUN" ]; then
   $PRE_RUN
 fi
 
-if [ -d "/usr/src/app" ] && [ -f "/usr/src/app/$PM2_COMMAND" ]; then
+if [ -d "/usr/src/app" ] && [ ! -z "$NODE_COMMAND" ]; then
   cd /usr/src/app || exit
-  pm2-docker start $PM2_COMMAND
+  pm2-docker start $NODE_COMMAND
 else
   echo "There is no NodeJS application installed"
-  $PM2_COMMAND
+  $NODE_COMMAND
 fi
 

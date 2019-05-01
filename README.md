@@ -1,4 +1,4 @@
-# BobCashStory/node-pm2-git
+# BobCashStory/node-git
 Docker container to fetch code from public/private repos with key where needed
 
 [![](https://images.microbadger.com/badges/image/cashstory/docker-node-pm2-git.svg)](https://microbadger.com/images/cashstory/docker-node-pm2-git "Get your own image badge on microbadger.com")
@@ -11,11 +11,9 @@ docker run -d -p 8080:8080 \
   --env PACKAGES="make gcc g++ python" \  
   --env REPO="git@github.com:reallyreally/node-expressjs-service.git" \
   --env GIT_BRANCH="production-live" \
-  --env KEYMETRICS_PUBLIC=0000aaaa1111ffff \
-  --env KEYMETRICS_SECRET=0123456789abcdef \
   --env SLACK_WEBHOOK="https://slack_url" \
   --env PRE_RUN="npm run build" \
-  --env PM2_COMMAND="pm2.json" \
+  --env NODE_COMMAND="npm run dist" \
   --env PORT=8080 \
   -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa \
   cashstory/node-pm2-git
@@ -36,10 +34,8 @@ services:
       - PACKAGES="make gcc g++ python"
       - REPO=git@github.com:reallyreally/node-expressjs-service.git
       - GIT_BRANCH=production-live
-      - KEYMETRICS_PUBLIC=0000aaaa1111ffff
-      - KEYMETRICS_SECRET=0123456789abcdef
       - PRE_RUN=npm start build
-      - PM2_COMMAND=ecosystem.json
+      - NODE_COMMAND=npm run dist
       - PORT=8080
     volumes:
       - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa
@@ -52,11 +48,10 @@ Environment variables
 `PACKAGES` allows installation of packages that might be needed for your app (optional)
 `REPO_KEY` read in a file to be used as the key for your repository clone (optional)
 `PRE_RUN` run command before pm2 ex: build your project (optional)
-`PM2_COMMAND` the file to use with pm2 (required)
+`NODE_COMMAND` the command to run your code
 `REPO` the repository to clone (required)
 `GIT_BRANCH` the branch to clone (optional)
 `SLACK_WEBHOOK` slack webhook to receine pm2 notifs (optional)
-`KEYMETRICS_PUBLIC` & `KEYMETRICS_SECRET` if you use [keymetrics.io](https://keymetrics.io) (optional)
 
 For private repos expose your ssh-key with volume
 -----------
@@ -64,20 +59,3 @@ For private repos expose your ssh-key with volume
 
 App Startup
 -----------
-
-In the example we call `./pm2.json` which could contain in your project the below.
-
-```
-{
-  "apps": [{
-    "name": "node-expressjs-service",
-    "script": "./bin/www",
-    "instances" : 0,
-    "exec_mode" : "cluster",
-    "post_update": ["npm install", "npm run build", "echo Launching..."],
-    "env": {
-      "production": true
-    }
-  }]
-}
-```
