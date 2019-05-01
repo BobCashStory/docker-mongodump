@@ -51,7 +51,9 @@ Environment variables
 `NODE_COMMAND` the command to run your code
 `REPO` the repository to clone (required)
 `GIT_BRANCH` the branch to clone (optional)
-`SLACK_WEBHOOK` slack webhook to receine pm2 notifs (optional)
+`SLACK_WEBHOOK` slack webhook to receive status notifs (optional)
+`SLACK_NAME` slack name to receive status notifs (optional)
+`SLACK_CHANNEL` slack channel to receive status notifs (optional)
 
 For private repos expose your ssh-key with volume
 -----------

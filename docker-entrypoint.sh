@@ -31,26 +31,30 @@ if [ ! -d "/usr/src/app/.git" ]; then
   git clone $GITBRANCHCMD $REPO /usr/src/app
   if [ -d "/usr/src/app/.git" ]; then
     cd /usr/src/app || exit
-    mkdir -pv /usr/src/app/.git/hooks
-    printf "#!/usr/bin/env sh\nif [ -f \"/usr/src/app/yarn.lock\" ]; then\n  cd /usr/src/app || exit\n  rm -Rf ./node_modules\n  yarn install\nelif [ -f \"/usr/src/app/package.json\" ]; then\n  cd /usr/src/app || exit\n  rm -Rf ./node_modules\n  npm install\nfi" > /usr/src/app/.git/hooks/post-merge
-    chmod 555 /usr/src/app/.git/hooks/post-merge
-    /usr/src/app/.git/hooks/post-merge
     ls -al
   else
     echo "Failed to fetch repository"
+    if [ ! -z "$SLACK_WEBHOOK" ]; then
+      sh ./slack.sh "Failed to fetch repository $REPO"
+    fi
+    exit 42
   fi
 fi
 
 if [ -d "/usr/src/app" ] && [ ! -z "$PRE_RUN" ]; then
-  cd /usr/src/app || exit
+  cd /usr/src/app || exit 42
   echo "$PRE_RUN"
   $PRE_RUN
 fi
 
 if [ -d "/usr/src/app" ] && [ ! -z "$NODE_COMMAND" ]; then
-  cd /usr/src/app || exit
+  cd /usr/src/app || exit 42
   $NODE_COMMAND
 else
   echo "There is no NodeJS application installed or $NODE_COMMAND exit"
+  if [ ! -z "$SLACK_WEBHOOK" ]; then
+    sh ./slack.sh "There is no NodeJS application installed or $NODE_COMMAND exit"
+  fi
+  exit 42
 fi
 
