@@ -80,6 +80,6 @@ VOLUME /app
 WORKDIR /app
 
 # Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apk/*
+RUN rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
 ENTRYPOINT ["entrypoint.sh"]
