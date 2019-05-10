@@ -13,7 +13,7 @@ docker run -d -p 8080:8080 \
   --env GIT_BRANCH="production-live" \
   --env SLACK_WEBHOOK="https://slack_url" \
   --env PRE_RUN="npm run build" \
-  --env NODE_COMMAND="npm run dist" \
+  --env NODE_ENTRYPOINT="npm run dist" \
   --env PORT=8080 \
   -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa \
   cashstory/node-pm2-git
@@ -35,7 +35,7 @@ services:
       - REPO=git@github.com:reallyreally/node-expressjs-service.git
       - GIT_BRANCH=production-live
       - PRE_RUN=npm start build
-      - NODE_COMMAND=npm run dist
+      - NODE_ENTRYPOINT=npm run dist
       - PORT=8080
     volumes:
       - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa
@@ -47,13 +47,14 @@ Environment variables
 `NPM_TOKEN` allows to use private [npmjs.com](https://www.npmjs.com) packages (optional)
 `PACKAGES` allows installation of packages that might be needed for your app (optional)
 `REPO_KEY` read in a file to be used as the key for your repository clone (optional)
-`PRE_RUN` run command before NODE_COMMAND ex: fetch dependency (optional)
-`NODE_COMMAND` the command to run your code
+`PRE_RUN` run command before NODE_ENTRYPOINT ex: fetch dependency (optional)
+`NODE_ENTRYPOINT` the command to run your code
 `REPO` the repository to clone (required)
 `GIT_BRANCH` the branch to clone (optional)
 `SLACK_WEBHOOK` slack webhook to receive status notifs (optional)
 `SLACK_NAME` slack name to receive status notifs (optional)
 `SLACK_CHANNEL` slack channel to receive status notifs (optional)
+`SLACK_EMOJI` slack EMOJI to receive status notifs (optional)
 
 For private repos expose your ssh-key with volume
 -----------
