@@ -62,11 +62,11 @@ COPY confs/supervisord.conf /etc/supervisord.conf
 COPY confs/crontab /etc/cron.d/hello-cron
 
 # Copy scripts
-COPY entrypoint.sh /usr/local/bin/
-COPY prepare.sh /usr/local/bin/
-COPY gitpull.sh /usr/local/bin/
-COPY start.sh /usr/local/bin/
-COPY slack.sh /usr/local/bin/
+COPY scripts/entrypoint.sh /usr/local/bin/
+COPY scripts/prepare.sh /usr/local/bin/
+COPY scripts/gitpull.sh /usr/local/bin/
+COPY scripts/start.sh /usr/local/bin/
+COPY scripts/slack.sh /usr/local/bin/
 
 # Make scripts runable
 RUN chmod +x /usr/local/entrypoint.sh
