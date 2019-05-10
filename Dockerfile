@@ -69,11 +69,11 @@ COPY scripts/start.sh /usr/local/bin/
 COPY scripts/slack.sh /usr/local/bin/
 
 # Make scripts runable
-RUN chmod +x /usr/local/entrypoint.sh
-RUN chmod +x /usr/local/prepare.sh
-RUN chmod +x /usr/local/gitpull.sh
-RUN chmod +x /usr/local/start.sh
-RUN chmod +x /usr/local/slack.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/prepare.sh
+RUN chmod +x /usr/local/bin/gitpull.sh
+RUN chmod +x /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/slack.sh
 
 RUN mkdir -p /app
 VOLUME /app
