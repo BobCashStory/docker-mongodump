@@ -30,7 +30,7 @@ RUN apk add --no-cache python
 RUN apk add --no-cache supervisor
 
 # Install Cron
-RUN apk add --no-cache cron
+RUN apk add --no-cache dcron
 
 # Install mininum packages
 RUN apk add --no-cache \
@@ -38,6 +38,12 @@ RUN apk add --no-cache \
 
 # Create folder where we clone
 RUN mkdir -p /usr/src
+
+# Prepare Cron
+RUN mkdir -p /var/log/cron && \
+  mkdir -m 0644 -p /var/spool/cron/crontabs && \
+  touch /var/log/cron/cron.log && \
+  mkdir -m 0644 -p /etc/cron.d
 
 # Prepare SSH 
 RUN mkdir /root/.ssh && \
@@ -51,6 +57,9 @@ RUN chmod 600 /root/.ssh/id_rsa
 
 # Copy supervisor config
 COPY confs/supervisord.conf /etc/supervisord.conf
+
+# Copy cron config
+COPY confs/crontab /etc/cron.d/hello-cron
 
 # Copy scripts
 COPY entrypoint.sh /usr/local/bin/
