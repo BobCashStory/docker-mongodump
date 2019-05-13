@@ -56,6 +56,7 @@ COPY confs/chaperone.conf /etc/chaperone.d/chaperone.conf
 
 # Copy scripts
 COPY scripts/entrypoint.sh /usr/local/bin/
+COPY scripts/install.sh /usr/local/bin/
 COPY scripts/prepare.sh /usr/local/bin/
 COPY scripts/gitpull.sh /usr/local/bin/
 COPY scripts/start.sh /usr/local/bin/
@@ -63,6 +64,7 @@ COPY scripts/slack.sh /usr/local/bin/
 
 # Make scripts runable
 RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/install.sh
 RUN chmod +x /usr/local/bin/prepare.sh
 RUN chmod +x /usr/local/bin/gitpull.sh
 RUN chmod +x /usr/local/bin/start.sh

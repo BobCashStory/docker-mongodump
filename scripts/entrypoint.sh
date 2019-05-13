@@ -40,9 +40,3 @@ if [ ! -d "/usr/src/app/.git" ]; then
     exit 42
   fi
 fi
-
-prepare.sh
-
-if [ -d "/usr/src/app" ]; then
-  /usr/bin/chaperone
-fi

@@ -50,6 +50,7 @@ do
     echo "---------------------------------" 2>&1
 done
 
+install.sh
 prepare.sh
 
 # Kill current app 
