@@ -50,7 +50,7 @@ do
     echo "---------------------------------" 2>&1
 done
 
-sh prepare.sh
+prepare.sh
 
 # Kill current app 
 PID=`ps -eaf | grep node | grep -v grep | awk '{print $2}'`
