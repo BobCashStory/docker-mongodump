@@ -15,6 +15,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.schema-version="1.0"
 
 ENV NPM_CONFIG_LOGLEVEL warn
+ENV TZ America/Los_Angeles
 
 # Install Git
 RUN apk add --no-cache \
