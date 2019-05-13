@@ -43,6 +43,6 @@ fi
 
 sh prepare.sh
 
-if [ -d "/usr/src/app" ] then
+if [ -d "/usr/src/app" ]; then
   /usr/bin/supervisord -n -c /etc/supervisord.conf
 fi
