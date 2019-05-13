@@ -71,4 +71,4 @@ WORKDIR /app
 # Clean up APT when done.
 RUN rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/chaperone"]
