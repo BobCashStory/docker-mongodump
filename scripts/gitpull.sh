@@ -41,7 +41,7 @@ IFS="$OLD_IFS"
 echo "Start to git pull this script." 2>&1
 
 for every_dir in ${dir[@]} 
-do 
+do
     cd ${every_dir}
     work_dir=`pwd`
     echo "---------------------------------" 2>&1
