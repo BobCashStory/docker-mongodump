@@ -38,7 +38,7 @@ IFS=","
 dir=($path) 
 IFS="$OLD_IFS" 
 
-echo "Start to execute this script." 2>&1
+echo "Start to git pull this script." 2>&1
 
 for every_dir in ${dir[@]} 
 do 
