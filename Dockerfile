@@ -26,11 +26,10 @@ RUN apk add --no-cache \
 RUN apk add --no-cache python3
 
 # Install chaperone
-RUN pip install chaperone 
+RUN pip3 install chaperone 
 
-# Install mininum packages
-RUN apk add --no-cache \
-  curl make gcc g++
+# Install curl for slack notif 
+RUN apk add --no-cache curl
 
 # Create folder where we clone
 RUN mkdir -p /usr/src

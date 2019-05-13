@@ -21,7 +21,7 @@ docker run -d -p 8080:8080 \
 
 or in with this docker-compose.yml file:
 ```
-version: '2'
+version: '3'
 services:
   darkknight:
     image: cashstory/docker-node-pm2-git:latest
