@@ -20,30 +20,23 @@ ENV NPM_CONFIG_LOGLEVEL warn
 RUN apk add --no-cache \
   git \
   openssh \
-  openssl \
   bash
 
 # Install Python
-RUN apk add --no-cache python 
+RUN apk add --no-cache python3
 
-# Install Supervisor
-RUN apk add --no-cache supervisor
-
-# Install Cron
-RUN apk add --no-cache dcron
+# Install chaperone
+RUN pip install chaperone 
 
 # Install mininum packages
 RUN apk add --no-cache \
-  curl make supervisor gcc g++ python linux-headers binutils-gold gnupg libstdc++
+  curl make gcc g++
 
 # Create folder where we clone
 RUN mkdir -p /usr/src
 
-# Prepare Cron
-RUN mkdir -p /var/log/cron && \
-  mkdir -m 0644 -p /var/spool/cron/crontabs && \
-  touch /var/log/cron/cron.log && \
-  mkdir -m 0644 -p /etc/cron.d
+# Create folder for chaperone
+RUN mkdir -p /etc/chaperone.d
 
 # Prepare SSH 
 RUN mkdir /root/.ssh && \
@@ -55,11 +48,8 @@ COPY confs/ssh-config /root/.ssh/config
 RUN chmod 600 /root/.ssh/config 
 RUN chmod 600 /root/.ssh/id_rsa
 
-# Copy supervisor config
-COPY confs/supervisord.conf /etc/supervisord.conf
-
-# Copy cron config
-COPY confs/crontab /etc/cron.d/hello-cron
+# Copy chaperone config
+COPY confs/chaperone.conf /etc/chaperone.d/chaperone.conf
 
 # Copy scripts
 COPY scripts/entrypoint.sh /usr/local/bin/
