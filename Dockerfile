@@ -25,6 +25,9 @@ RUN apk add --no-cache \
 # Install Python
 RUN apk add --no-cache python3
 
+# Install tzdata for cron job
+RUN apk --no-cache tzdata
+
 # Install chaperone
 RUN pip3 install chaperone 
 
