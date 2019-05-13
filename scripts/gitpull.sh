@@ -50,8 +50,8 @@ do
     echo "---------------------------------" 2>&1
 done
 
-install.sh
-prepare.sh
+install.sh 2>&1
+prepare.sh 2>&1
 
 # Kill current app 
 PID=`ps -eaf | grep node | grep -v grep | awk '{print $2}'`
