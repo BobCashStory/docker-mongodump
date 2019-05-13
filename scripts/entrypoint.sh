@@ -35,13 +35,13 @@ if [ ! -d "/usr/src/app/.git" ]; then
   else
     echo "Failed to fetch repository"
     if [ ! -z "$SLACK_WEBHOOK" ]; then
-      sh ./slack.sh "Failed to fetch repository $REPO"
+      sh slack.sh "Failed to fetch repository $REPO"
     fi
     exit 42
   fi
 fi
 
-sh ./prepare.sh
+sh prepare.sh
 
 if [ -d "/usr/src/app" ] then
   /usr/bin/supervisord -n -c /etc/supervisord.conf
