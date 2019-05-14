@@ -15,17 +15,17 @@ path="/usr/src/app"
 # Do not edit the following section
 
 # Check if user is root
-[ $(id -u) != "0" ] && { echo "${CFAILURE}Error: You must run this script as root.${CEND}"; exit 1; } 2>&1
+[ $(id -u) != "0" ] && { echo "${CFAILURE}Error: You must run this script as root.${CEND}"; exit 1; }
 
 # Check if directory path exists
 if [[ "${path}" = "" ]]; then 
-    echo "${CFAILURE}Error: You must set the correct directory path.Exit.${CEND}" 2>&1
+    echo "${CFAILURE}Error: You must set the correct directory path.Exit.${CEND}"
     exit 1
 fi
 
 # Check if command git exists
 if ! [ -x "$(command -v git)" ]; then
-    echo "${CFAILURE}Error: You may not install the git.Exit.${CEND}" 2>&1
+    echo "${CFAILURE}Error: You may not install the git.Exit.${CEND}"
     exit 1
 fi
 
@@ -38,20 +38,20 @@ IFS=","
 dir=($path) 
 IFS="$OLD_IFS" 
 
-echo "Start to git pull this script." 2>&1
+echo "Start to git pull this script."
 
 for every_dir in ${dir[@]} 
 do
     cd ${every_dir}
     work_dir=`pwd`
-    echo "---------------------------------" 2>&1
-    echo "Start to deal" ${work_dir} 2>&1
+    echo "---------------------------------"
+    echo "Start to deal" ${work_dir}
     ${git_path} pull
-    echo "---------------------------------" 2>&1
+    echo "---------------------------------"
 done
 
-install.sh 2>&1
-prepare.sh 2>&1
+install.sh
+prepare.sh
 
 # Kill current app 
 PID=`ps -eaf | grep node | grep -v grep | awk '{print $2}'`
@@ -60,4 +60,4 @@ if [[ "" !=  "$PID" ]]; then
   kill -9 $PID
 fi
 
-echo "All done,thanks for your use." 2>&1
+echo "All done,thanks for your use."
