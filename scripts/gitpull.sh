@@ -40,24 +40,38 @@ IFS="$OLD_IFS"
 
 echo "Start to git pull this script."
 
+NEED_TO_RELOAD=false
 for every_dir in ${dir[@]} 
 do
     cd ${every_dir}
     work_dir=`pwd`
     echo "---------------------------------"
     echo "Start to deal" ${work_dir}
-    ${git_path} pull
+    UPSTREAM=${1:-'@{u}'}
+    LOCAL=$(git rev-parse @)
+    REMOTE=$(git rev-parse "$UPSTREAM")
+    BASE=$(git merge-base @ "$UPSTREAM")
+
+    if [ $LOCAL = $REMOTE ]; then
+        echo "Up-to-date"
+    elif [ $LOCAL = $BASE ]; then
+        echo "Need to pull"
+        NEED_TO_RELOAD=true
+        ${git_path} pull
+        install.sh
+        prepare.sh
+    fi
     echo "---------------------------------"
 done
 
-install.sh
-prepare.sh
-
-# Kill current app 
-PID=`ps -eaf | grep node | grep -v grep | awk '{print $1}'`
-if [[ "" !=  "$PID" ]]; then
-  echo "killing $PID"
-  kill -9 $PID
+if [ ! -z "$NEED_TO_RELOAD" ]; then
+    echo "Send signal to reload"
+    # Kill current app 
+    PID=`ps -eaf | grep "node $NODE_ENTRYPOINT" | grep -v grep | awk '{print $1}'`
+    if [[ "" !=  "$PID" ]]; then
+    echo "killing $PID"
+    kill -1 $PID
+    fi
 fi
 
-echo "All done,thanks for your use."
+echo "All done, thanks for your use."
