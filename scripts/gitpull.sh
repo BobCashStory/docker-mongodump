@@ -54,7 +54,7 @@ install.sh
 prepare.sh
 
 # Kill current app 
-PID=`ps -eaf | grep node | grep -v grep | awk '{print $2}'`
+PID=`ps -eaf | grep node | grep -v grep | awk '{print $1}'`
 if [[ "" !=  "$PID" ]]; then
   echo "killing $PID"
   kill -9 $PID
