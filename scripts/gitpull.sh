@@ -38,6 +38,12 @@ IFS=","
 dir=($path) 
 IFS="$OLD_IFS" 
 
+if [ ! -z "$GIT_BRANCH" ]; then
+    GITBRANCHCMD="-b ${GIT_BRANCH}"
+else
+    GITBRANCHCMD=""
+fi
+
 echo "Start to git pull this script."
 
 NEED_TO_RELOAD=false
@@ -47,14 +53,13 @@ do
     work_dir=`pwd`
     echo "---------------------------------"
     echo "Start to deal" ${work_dir}
-    UPSTREAM=${1:-'@{u}'}
-    LOCAL=$(git rev-parse @)
-    REMOTE=$(git rev-parse "$UPSTREAM")
-    BASE=$(git merge-base @ "$UPSTREAM")
+    git fetch origin
+    LOCAL=$(git rev-parse HEAD)
+    REMOTE=$(git rev-parse "@{u}")
 
     if [ $LOCAL = $REMOTE ]; then
         echo "Up-to-date"
-    elif [ $LOCAL = $BASE ]; then
+    else
         echo "Need to pull"
         NEED_TO_RELOAD=true
         ${git_path} pull
