@@ -62,3 +62,12 @@ For private repos expose your ssh-key with volume
 
 App Startup
 -----------
+
+
+Utility
+-------
+
+get into container `docker exec -i -t container_name bash`
+
+build new version of container `docker build . -t cashstory/node-git:latest`
+push new version onf container `docker push cashstory/node-git:latest`
