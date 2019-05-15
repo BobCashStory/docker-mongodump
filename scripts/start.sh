@@ -7,7 +7,7 @@ fi
 
 if [ -d "/usr/src/app" ] && [ ! -z "$NODE_ENTRYPOINT" ]; then
     cd /usr/src/app || exit 42
-    slack.sh "Starting NodeJS application in $NODE_ENV !"
+    slack.sh "Starting NodeJS application in $NODE_ENV from $REPO/$GIT_BRANCH  !"
     nohup node $NODE_ENTRYPOINT &
 else
     echo "There is no NodeJS application installed or $NODE_ENTRYPOINT exit"
