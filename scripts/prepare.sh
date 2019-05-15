@@ -1,4 +1,10 @@
 #!/bin/bash
+
+if [ -z "$NODE_ENV" ]; then
+  NODE_ENV="production"
+  export NODE_ENV
+fi
+
 if [ -d "/usr/src/app" ]; then
     cd /usr/src/app || exit 42
     echo "npm install"

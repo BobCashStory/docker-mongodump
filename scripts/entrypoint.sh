@@ -1,11 +1,6 @@
 #!/usr/bin/env sh
 set -x
 
-if [ -z "$NODE_ENV" ]; then
-  NODE_ENV=production
-  export NODE_ENV
-fi
-
 if [ ! -z "$PACKAGES" ]; then
   apk add --no-cache $PACKAGES
 fi
