@@ -64,7 +64,7 @@ do
     echo "---------------------------------"
 done
 
-if [ ! -z "$NEED_TO_RELOAD" ]; then
+if [ $NEED_TO_RELOAD ]; then
     echo "Send signal to reload"
     # Kill current app 
     PID=`ps -eaf | grep "node $NODE_ENTRYPOINT" | grep -v grep | awk '{print $1}'`
