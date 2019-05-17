@@ -1,8 +1,5 @@
-# BobCashStory/node-git
+# BobCashStory/docker-mongodump
 Docker container periodicaly mongodump a mongodb
-
-[![](https://images.microbadger.com/badges/image/cashstory/docker-node-pm2-git.svg)](https://microbadger.com/images/cashstory/docker-node-pm2-git "Get your own image badge on microbadger.com")
-[![GitHub issues](https://img.shields.io/github/issues/BobCashStory/docker-node-pm2-git.svg?style=flat-square)](https://github.com/BobCashStory/docker-node-pm2-git/issues) [![GitHub license](https://img.shields.io/github/license/reallyreally/docker-node-pm2-git.svg?style=flat-square)](https://github.com/BobCashStory/docker-node-pm2-git/blob/master/LICENSE) [![Docker Pulls](https://img.shields.io/docker/pulls/cashstory/docker-node-pm2-git.svg?style=flat-square)](https://github.com/BobCashStory/docker-node-pm2-git/)
 
 Launch a cron job who do mongodump hosted node project with something like:
 ```
