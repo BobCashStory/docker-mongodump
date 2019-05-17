@@ -20,6 +20,9 @@ ENV TZ America/Los_Angeles
 # Install mongodb-tools
 RUN apk add --no-cache mongodb-tools
 
+# Install Python
+RUN apk add --no-cache python3
+
 # Install tzdata for cron job
 RUN apk add --no-cache tzdata
 
