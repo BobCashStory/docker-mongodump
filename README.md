@@ -27,7 +27,7 @@ services:
 Environment variables
 ---------------------
 
-`MONGODUMP_OPTIONS` add all
+`MONGODUMP_OPTIONS` add all option to dump command (mendatory)
 `DATABASE_NAME` select the database you wanna dump, if no value it dump all (optional)
 `CRON_ENTRY` cron recurence for dump (optional)
 `SLACK_WEBHOOK` slack webhook to receive status notifs (optional)
