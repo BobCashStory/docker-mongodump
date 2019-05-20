@@ -17,6 +17,9 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 ENV NPM_CONFIG_LOGLEVEL warn
 ENV TZ America/Los_Angeles
 
+# Install bash
+RUN apk add --no-cache bash
+
 # Install mongodb-tools
 RUN apk add --no-cache mongodb-tools
 

@@ -1,8 +1,7 @@
-#!/usr/bin/env sh
-set -x
+#!/bin/bash
 
-local options="$MONGODUMP_OPTIONS --archive"
-local timestamp="\`date +%Y%m%d%H%M\`"
+options="$MONGODUMP_OPTIONS --archive"
+timestamp=`date +%Y%m%d%H%M`
 
 if [ -z "$MONGODUMP_OPTIONS" ]; then
   echo "Required environment variable MONGODUMP_OPTIONS not found"
@@ -10,26 +9,26 @@ if [ -z "$MONGODUMP_OPTIONS" ]; then
 fi
 
 if [ ! -z "$DATABASE_NAME" ]; then
-  local output_file="$DATABASE_NAME-$timestamp.dump"
-  local output_command="/dump/$output_file"
-  if mongodump $options --db $DATABASE_NAME > $output_command ; then
+  output_file="$DATABASE_NAME-$timestamp.dump"
+  output_command="/dump/$output_file"
+  if mongodump $options --db $DATABASE_NAME > "$output_command" ; then
     echo "Dump succeeded"
   else
     echo "Dump failed"
     if [ ! -z "$SLACK_WEBHOOK" ]; then
-        slack.sh "Dump failed" 
+      slack.sh "Dump failed" 
     fi
     exit 42
   fi
 else
-  local output_file="$timestamp.dump"
-  local output_command="/dump/$output_file"
-  if mongodump $options > $output_command; then
+  output_file="$timestamp.dump"
+  output_command="/dump/$output_file"
+  if mongodump $options > "$output_command"; then
     echo "Dump succeeded"
   else
     echo "Dump failed"
     if [ ! -z "$SLACK_WEBHOOK" ]; then
-        slack.sh "Dump failed" 
+      slack.sh "Dump failed" 
     fi
     exit 42
   fi
