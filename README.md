@@ -1,7 +1,7 @@
 # BobCashStory/docker-mongodump
 Docker container periodicaly mongodump a mongodb
 
-Launch a cron job who do mongodump hosted node project with something like:
+Launch a cron job who do mongodump of each db :
 ```
 docker run -d -p 8080:8080 \
   --env MONGODUMP_OPTIONS: --host cs-mongodb:27017 -u root -p blablabla \
@@ -27,8 +27,10 @@ services:
 Environment variables
 ---------------------
 
-`MONGODUMP_OPTIONS` add all option to dump command (mendatory)
-`DATABASE_NAME` select the database you wanna dump, if no value it dump all (optional)
+`MONGO_URL` uri for dump command (mendatory)
+`MONGODUMP_OPTIONS` add all option to dump command (optional)
+`MONGO_AUTHSOURCE` source for auth db 'admin' by default (optional)
+`KEEP_DAY` days before remove dump from volume '10' by default (optional)
 `SLACK_WEBHOOK` slack webhook to receive status notifs (optional)
 `SLACK_NAME` slack name to receive status notifs (optional)
 `SLACK_CHANNEL` slack channel to receive status notifs (optional)

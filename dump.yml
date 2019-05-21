@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  cs-mongo-auto-dump:
+    image: cashstory/mongodump:latest
+    container_name: cs-mongo-auto-dump
+    restart: always
+    environment:
+      - MONGO_URL=mongodb://root:GBmkvabpWhQw2YEAg4@157.230.13.235:8088/?authSource=admin
+      - SLACK_WEBHOOK=https://hooks.slack.com/services/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
+      - SLACK_NAME=Mongodump
+      - SLACK_CHANNEL=#darkknight-logs
+    volumes:
+      - cs_mongo_db_dump:/dump

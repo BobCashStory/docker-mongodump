@@ -18,10 +18,10 @@ ENV NPM_CONFIG_LOGLEVEL warn
 ENV TZ America/Los_Angeles
 
 # Install bash
-RUN apk add --no-cache bash
+RUN apk add --no-cache bash jq
 
 # Install mongodb-tools
-RUN apk add --no-cache mongodb-tools
+RUN apk add --no-cache mongodb mongodb-tools
 
 # Install Python
 RUN apk add --no-cache python3

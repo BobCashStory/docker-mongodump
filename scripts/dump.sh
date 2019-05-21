@@ -1,35 +1,39 @@
 #!/bin/bash
 
-options="$MONGODUMP_OPTIONS --archive"
+uri="--uri $MONGO_URL"
+options="${MONGODUMP_OPTIONS:- } --archive"
 timestamp=`date +%Y%m%d%H%M`
+authSource=${MONGO_AUTHSOURCE:-admin}
+keep_day=${KEEP_DAY:-10}
 
-if [ -z "$MONGODUMP_OPTIONS" ]; then
-  echo "Required environment variable MONGODUMP_OPTIONS not found"
+if [ -z "$MONGO_URL" ]; then
+  echo "Required environment variable MONGO_URL not found"
   exit 42
 fi
 
-if [ ! -z "$DATABASE_NAME" ]; then
-  output_file="$DATABASE_NAME-$timestamp.dump"
-  output_command="/dump/$output_file"
-  if mongodump $options --db $DATABASE_NAME > "$output_command" ; then
-    echo "Dump succeeded"
-  else
-    echo "Dump failed"
-    if [ ! -z "$SLACK_WEBHOOK" ]; then
-      slack.sh "Dump failed" 
+
+DATABASES=`mongo $MONGO_URL?authSource=$authSource --quiet --eval "printjson(db.adminCommand('listDatabases'))" | jq -r '.databases[].name'`
+
+echo "$DATABASES"
+for database in ${DATABASES[@]} 
+do
+    echo "---------------------------------"
+    echo "Start to dump" ${database}
+    output_file="$database-$timestamp.dump"
+    output_command="/dump/$output_file"
+    if mongodump $uri$database?authSource=$authSource $options > "$output_command" ; then
+      echo "Dump $database succeeded"
+    else
+      echo "Dump $database failed"
+      if [ ! -z "$SLACK_WEBHOOK" ]; then
+        slack.sh "Dump $database failed" 
+      fi
+      exit 42
     fi
-    exit 42
-  fi
-else
-  output_file="$timestamp.dump"
-  output_command="/dump/$output_file"
-  if mongodump $options > "$output_command"; then
-    echo "Dump succeeded"
-  else
-    echo "Dump failed"
-    if [ ! -z "$SLACK_WEBHOOK" ]; then
-      slack.sh "Dump failed" 
-    fi
-    exit 42
-  fi
-fi
+    echo "---------------------------------"
+done
+
+# remove dumps older than 10 days
+find /dump/ -type f -name '*.dump' -mtime +$keep_day -exec rm {} \;
+
+
