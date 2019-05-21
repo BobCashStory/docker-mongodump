@@ -4,10 +4,8 @@ Docker container periodicaly mongodump a mongodb
 Launch a cron job who do mongodump of each db :
 ```
 docker run -d -p 8080:8080 \
-  --env MONGODUMP_OPTIONS: --host cs-mongodb:27017 -u root -p blablabla \
-  --env CRON_ENTRY: 
-  -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa \
-  cashstory/node-pm2-git
+  --env MONGO_URL: mongodb://root:blablabla@cs-mongodb:27017/ \
+  cashstory/mongodump
 ```
 
 or in with this docker-compose.yml file:
@@ -15,11 +13,11 @@ or in with this docker-compose.yml file:
 version: '3'
 services:
   mongo_dump:
-    image: cashstory/docker-mongo-dump:latest
+    image: cashstory/mongodump:latest
     container_name: mongo_dump
     restart: always
     environment:
-      MONGODUMP_OPTIONS: --host cs-mongodb:27017 -u root -p blablabla
+      - MONGO_URL=mongodb://root:blablabla@cs-mongodb:27017/
     volumes:
       - mongo_db_dump:/dump
 ```
