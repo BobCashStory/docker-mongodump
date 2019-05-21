@@ -15,7 +15,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.schema-version="1.0"
 
 ENV NPM_CONFIG_LOGLEVEL warn
-ENV TZ America/Los_Angeles
+ENV TZ Europe/Paris
 
 # Install bash
 RUN apk add --no-cache bash jq
