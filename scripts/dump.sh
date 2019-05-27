@@ -2,7 +2,7 @@
 
 uri="--uri $MONGO_URL"
 options="${MONGODUMP_OPTIONS:- } --archive"
-timestamp=`date +%Y%m%d%H%M`
+timestamp=`date +%Y-%m-%d_%Hh%M`
 authSource=${MONGO_AUTHSOURCE:-admin}
 keep_day=${KEEP_DAY:-10}
 
