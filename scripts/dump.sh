@@ -1,7 +1,7 @@
 #!/bin/bash
 
 uri="--uri $MONGO_URL"
-options="${MONGODUMP_OPTIONS:- } --archive"
+options="${MONGODUMP_OPTIONS:- }"
 timestamp=`date +%Y-%m-%d_%Hh%M`
 authSource=${MONGO_AUTHSOURCE:-admin}
 keep_day=${KEEP_DAY:-10}
@@ -19,9 +19,9 @@ for database in ${DATABASES[@]}
 do
     echo "---------------------------------"
     echo "Start to dump" ${database}
-    output_file="$database-$timestamp.dump"
+    output_file="$database-$timestamp.gz"
     output_command="/dump/$output_file"
-    if mongodump $uri$database?authSource=$authSource $options > "$output_command" ; then
+    if mongodump $uri$database?authSource=$authSource $options --gzip --archive="$output_command" ; then
       echo "Dump $database succeeded"
     else
       echo "Dump $database failed"
