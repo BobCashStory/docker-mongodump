@@ -1,5 +1,12 @@
 # BobCashStory/docker-mongodump
 Docker container periodicaly mongodump a mongodb
+By default container do hourly backups and keep
+
+- 24 latest hourly (0 * * * *) backup `hourly-admin-2019-09-01_01h00.gz`
+- 24 latest daily (10 1 * * *) backup `hourly-admin-2019-09-01_01h10.gz`
+- 24 latest monthly (20 1 1 * *) backup `monthly-admin-2019-09-01_01h20.gz`
+
+each kind of backup run in a different scheduler to avoid overlap
 
 Launch a cron job who do mongodump of each db :
 ```
