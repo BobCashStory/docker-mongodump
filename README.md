@@ -28,7 +28,7 @@ Environment variables
 `MONGO_URL` uri for dump command (mendatory)
 `MONGODUMP_OPTIONS` add all option to dump command (optional)
 `MONGO_AUTHSOURCE` source for auth db 'admin' by default (optional)
-`KEEP_DAY` days before remove dump from volume '10' by default (optional)
+`KEEP_BACKUP` number of backup we keep for hourly, daily and monthly backup before remove dump from volume '24' by default (optional)
 `SLACK_WEBHOOK` slack webhook to receive status notifs (optional)
 `SLACK_NAME` slack name to receive status notifs (optional)
 `SLACK_CHANNEL` slack channel to receive status notifs (optional)

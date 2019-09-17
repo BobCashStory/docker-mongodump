@@ -4,7 +4,7 @@ uri="--uri $MONGO_URL"
 options="${MONGODUMP_OPTIONS:- }"
 timestamp=`date +%Y-%m-%d_%Hh%M`
 authSource=${MONGO_AUTHSOURCE:-admin}
-keep_backup=${KEEP_BACKUP:-12}
+keep_backup=${KEEP_BACKUP:-24}
 mode="${1:-daily}"
 
 echo "Mode: $mode"
