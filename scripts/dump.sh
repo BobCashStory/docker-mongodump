@@ -4,10 +4,13 @@ uri="--uri $MONGO_URL"
 options=${MONGODUMP_OPTIONS:-""}
 timestamp=`date +%Y-%m-%d_%Hh%M`
 authSource=${MONGO_AUTHSOURCE:-"admin"}
-keep_backup=${KEEP_BACKUP:-24}
+default_keep_backup="24"
+keep_backup="+${KEEP_BACKUP:-$default_keep_backup}"
 mode=${1:-"daily"}
 
 echo "Mode: $mode"
+echo "Keep backup: $keep_backup"
+
 if [ -z "$MONGO_URL" ]; then
   echo "Required environment variable MONGO_URL not found"
   exit 42
@@ -36,7 +39,7 @@ do
 done
 
 # remove dumps older than 10(keep_backup) files
-rm -rf $(ls -1t . | tail -n +$keep_backup | grep $mode)
+rm -rf $(ls -1t . | tail -n $keep_backup | grep $mode)
 # find /dump/ -type f -name '$mode-*.gz' -mtime +$keep_backup -exec rm {} \;
 
 
