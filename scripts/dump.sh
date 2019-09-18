@@ -29,7 +29,7 @@ do
     if mongodump $uri$database?authSource=$authSource $options --gzip --archive="$output_command" ; then
       echo "Backup $database succeeded"
       list_to_remove=$(ls -1t /dump | tail -n $keep_backup | grep $mode-$database)
-      echo "remove backup older than $keep_backup files $list_to_remove"
+      echo "remove backup $database older than $keep_backup files $list_to_remove"
       rm -rf $list_to_remove
       echo "Backup $database cleaned"
     else
