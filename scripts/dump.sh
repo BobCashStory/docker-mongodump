@@ -27,11 +27,14 @@ do
     output_file="$mode-$database-$timestamp.gz"
     output_command="/dump/$output_file"
     if mongodump $uri$database?authSource=$authSource $options --gzip --archive="$output_command" ; then
-      echo "Dump $database succeeded"
+      echo "Backup $database succeeded"
+      echo "remove backup older than $keep_backup files"
+      rm -rf $(ls -1t . | tail -n $keep_backup | grep $mode-$database)
+      echo "Backup $database cleaned"
     else
-      echo "Dump $database failed"
+      echo "Backup $database failed"
       if [ ! -z "$SLACK_WEBHOOK" ]; then
-        slack.sh "Dump $database failed" 
+        slack.sh "Backup $database failed" 
       fi
       exit 42
     fi
@@ -39,7 +42,7 @@ do
 done
 
 # remove dumps older than 10(keep_backup) files
-rm -rf $(ls -1t . | tail -n $keep_backup | grep $mode)
+# rm -rf $(ls -1t . | tail -n $keep_backup | grep $mode)
 # find /dump/ -type f -name '$mode-*.gz' -mtime +$keep_backup -exec rm {} \;
 
 
